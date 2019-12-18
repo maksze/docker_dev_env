@@ -17,6 +17,10 @@ Start docker
 ```
 docker-compose up -d
 ```
+Stop docker
+```
+docker-compose stop
+```
 
 Install symfony
 ```
