@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  mysql:
+    image: orchardup/mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_bd:/var/lib/mysql
+    environment:
+      MYSQL_USERNAME: root
+
+  mysqladmin:
+    image: nazarpc/phpmyadmin
+    ports:
+      - "1234:80"
+    links:
+      - mysql
+
+  memcached:
+    image: memcached
+
+  php:
+    build:
+      context: ./dockerfiles
+      dockerfile: Dockerfile_php 
+    links:
+      - mysql
+      - memcached
+    volumes:
+      - ./app:/var/www
+    environment:
+      XDEBUG_CONFIG: remote_host=192.168.0.1
+      XDEBUG_CONFIG: idekey=xdebug
+      TZ: Asia/Yekaterinburg
+
+  nginx:
+    image: nginx
+    ports:
+      - 3000:80
+      - 443:443
+    links:
+      - php
+    volumes:
+      - ./app:/var/www
+      - ./nginx:/etc/nginx/
