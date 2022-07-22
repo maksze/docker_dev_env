@@ -1,16 +1,20 @@
 # PHP dev env \w docker
 
 features:
-- php 7.2
+- php 7.4
 - composer
+- git
 - nginx
 - mysql
 - mysqladmin
 - memcached
+- redis 
+- mongo
 
 todo:
 - rm nazarpc/phpmyadmin
 - migrate to config version 3
+- migrate to php 8
 
 ## Useful commands
 Start docker

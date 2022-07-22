@@ -3,17 +3,15 @@ version: '2'
 services:
   mysql:
     image: orchardup/mysql
-    ports:
-      - "3306:3306"
     volumes:
-      - ./mysql_bd:/var/lib/mysql
+      - ./mysql_db:/var/lib/mysql
     environment:
       MYSQL_USERNAME: root
 
   mysqladmin:
     image: nazarpc/phpmyadmin
     ports:
-      - "1234:80"
+      - "3031:80"
     links:
       - mysql
 
@@ -29,16 +27,12 @@ services:
       - memcached
     volumes:
       - ./app:/var/www
-    environment:
-      XDEBUG_CONFIG: remote_host=192.168.0.1
-      XDEBUG_CONFIG: idekey=xdebug
-      TZ: Asia/Yekaterinburg
+      - ./composer:/root/.composer/
 
   nginx:
     image: nginx
     ports:
-      - 3000:80
-      - 443:443
+      - 3030:80
     links:
       - php
     volumes:
